@@ -42,6 +42,12 @@
 		30A0434914DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434614DC770100060A13 /* Localizable.strings */; };
 		30E1352710E2C1420031B30D /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30E1352610E2C1420031B30D /* Cordova.plist */; };
 		30E5649213A7FCAF007403D8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E5649113A7FCAF007403D8 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C49AC6F3163AB29100DD25F7 /* KHSocialPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = C49AC6F2163AB29100DD25F7 /* KHSocialPlugin.m */; };
+		C49AC6F7163AB3D800DD25F7 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6F6163AB3D800DD25F7 /* FacebookSDK.framework */; };
+		C49AC6F9163AB3F300DD25F7 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C49AC6F8163AB3F300DD25F7 /* FacebookSDKResources.bundle */; };
+		C49AC6FD163AB41A00DD25F7 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FA163AB41A00DD25F7 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C49AC6FE163AB41A00DD25F7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FB163AB41A00DD25F7 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C49AC6FF163AB41A00DD25F7 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FC163AB41A00DD25F7 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +109,13 @@
 		30E5649113A7FCAF007403D8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* KHSocialPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHSocialPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* KHSocialPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "KHSocialPlugin-Info.plist"; path = "../KHSocialPlugin-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		C49AC6F1163AB29100DD25F7 /* KHSocialPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHSocialPlugin.h; sourceTree = "<group>"; };
+		C49AC6F2163AB29100DD25F7 /* KHSocialPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHSocialPlugin.m; sourceTree = "<group>"; };
+		C49AC6F6163AB3D800DD25F7 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		C49AC6F8163AB3F300DD25F7 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = ../../../FacebookSDK/FacebookSDK.framework/Versions/A/Resources/FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		C49AC6FA163AB41A00DD25F7 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		C49AC6FB163AB41A00DD25F7 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		C49AC6FC163AB41A00DD25F7 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +123,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C49AC6FD163AB41A00DD25F7 /* Accounts.framework in Frameworks */,
+				C49AC6FE163AB41A00DD25F7 /* AdSupport.framework in Frameworks */,
+				C49AC6FF163AB41A00DD25F7 /* Social.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
@@ -125,6 +141,7 @@
 				301BF5C5109A6A2B0062928A /* SystemConfiguration.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				30E5649213A7FCAF007403D8 /* CoreMedia.framework in Frameworks */,
+				C49AC6F7163AB3D800DD25F7 /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +231,11 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C49AC6FA163AB41A00DD25F7 /* Accounts.framework */,
+				C49AC6FB163AB41A00DD25F7 /* AdSupport.framework */,
+				C49AC6FC163AB41A00DD25F7 /* Social.framework */,
+				C49AC6F8163AB3F300DD25F7 /* FacebookSDKResources.bundle */,
+				C49AC6F6163AB3D800DD25F7 /* FacebookSDK.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -243,6 +265,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				C49AC6F1163AB29100DD25F7 /* KHSocialPlugin.h */,
+				C49AC6F2163AB29100DD25F7 /* KHSocialPlugin.m */,
 			);
 			name = Plugins;
 			path = KHSocialPlugin/Plugins;
@@ -378,6 +402,7 @@
 				3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
+				C49AC6F9163AB3F300DD25F7 /* FacebookSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +433,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				C49AC6F3163AB29100DD25F7 /* KHSocialPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +490,10 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../FacebookSDK\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -484,6 +514,10 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../FacebookSDK\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "KHSocialPlugin/KHSocialPlugin-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -527,6 +561,7 @@
 					"-weak-lSystem",
 					"-all_load",
 					"-Obj-C",
+					"-lsqlite3.0",
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
@@ -566,6 +601,7 @@
 					"-weak-lSystem",
 					"-all_load",
 					"-Obj-C",
+					"-lsqlite3.0",
 				);
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
