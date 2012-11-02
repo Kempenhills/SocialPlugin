@@ -1,2 +1,2 @@
-KHSocialPlugin
+Social Sharing
 ==============
