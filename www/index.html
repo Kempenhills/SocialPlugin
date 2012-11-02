@@ -25,8 +25,39 @@
         <script type="text/javascript" src="js/cordova-2.1.0.js"></script>
         <script type="text/javascript" src="js/khsocialplugin.js"></script>
         <title>KHSocialPlugin</title>
+        <script type="text/javascript">
+            function FBGetLoginStatus() {
+                function success() {
+                    alert('Logged in');
+                }
+                
+                function fail() {
+                    alert('Not logged in.')
+                }
+            
+                window.plugins.KHSocialPlugin.FBGetLoginStatus(success, fail);
+            }
+            
+            function FBPostDemoWallpost() {
+                window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new Kempenhills Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','http://www.google.nl');
+            }
+            
+            function FBPostDemoWallpostLocalImage() {
+                navigator.camera.getPicture(function(imgURI){
+                    window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new Kempenhills Social Plugin! Using local images!', imgURI,'http://www.google.nl');
+                }, function(e){}, {
+                    quality:            40,
+                    destinationType:    Camera.DestinationType.FILE_URI,
+                    sourceType :        Camera.PictureSourceType.PHOTOLIBRARY,
+                    correctOrientation: true
+                });
+            }
+        </script>
     </head>
     <body>
-            <input type="button" value="Login to Facebook" onclick="javascript:window.plugins.KHSocialPlugin.FBAuthorize()"/>
+            <input type="button" value="Login to Facebook" onclick="javascript:window.plugins.KHSocialPlugin.FBAuthorize()"/><br />
+            <input type="button" value="Facebook status" onclick="javascript:FBGetLoginStatus()"/><br />
+            <input type="button" value="Facebook wall post http:// image" onclick="javascript:FBPostDemoWallpost()"/><br />
+            <input type="button" value="Facebook wall post file:// local image" onclick="javascript:FBPostDemoWallpostLocalImage()"/><br />
     </body>
 </html>

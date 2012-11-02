@@ -104,6 +104,9 @@
         [[UIApplication sharedApplication] setStatusBarOrientation:newOrient];
     }
     
+    KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
+    [khsp application:application didFinishLaunchingWithOptions:launchOptions];
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
@@ -133,6 +136,16 @@
     // IPhone doesn't support upside down by default, while the IPad does.  Override to allow all orientations always, and let the root view controller decide whats allowed (the supported orientations mask gets intersected).
     NSUInteger supportedInterfaceOrientations = (1 << UIInterfaceOrientationPortrait) | (1 << UIInterfaceOrientationLandscapeLeft) | (1 << UIInterfaceOrientationLandscapeRight) | (1 << UIInterfaceOrientationPortraitUpsideDown);
     return supportedInterfaceOrientations;
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
+    return [khsp application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+}
+
+-(void)applicationDidBecomeActive:(UIApplication *)application; {
+    KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
+    [khsp applicationDidBecomeActive:application];
 }
 
 @end
