@@ -1,6 +1,8 @@
 Social Sharing
 ==============
+The Social Sharing plugin makes your life allot easier when it comes to posting stuff to either Facebook or Twitter from a Cordova app!
 
+==============
 
 Copyright (C) 2012 KempenHills ICT BV
 
