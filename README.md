@@ -4,7 +4,7 @@
 
 The Social Sharing plugin makes your life a lot easier when it comes to interacting with either Facebook or Twitter from a Cordova app!
 
-### Copyright (C) 2012 KempenHills ICT BV ###
+Copyright (C) 2012 KempenHills ICT BV
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
