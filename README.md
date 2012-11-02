@@ -1,10 +1,8 @@
-*Social Sharing*
+#Social Sharing
 
 ![KempenHills Logo](http://en.gravatar.com/userimage/41641793/5ecd217ad2bec9299b198ff39a95b463.png?size=200)
-==============
-The Social Sharing plugin makes your life a lot easier when it comes to interacting with either Facebook or Twitter from a Cordova app!
 
-==============
+The Social Sharing plugin makes your life a lot easier when it comes to interacting with either Facebook or Twitter from a Cordova app!
 
 Copyright (C) 2012 KempenHills ICT BV
 
