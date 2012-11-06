@@ -14,13 +14,10 @@ First we must include all the right files to our project.
 	* Copy the content of native/ios/ into your project's plugins group
 	* Add the mapping 'KHSocialPlugin' -> 'KHSocialPlugin' to cordova.plist
 	* Include the Facebook SDK **AND** Deprecated header. <a href="https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/">Facebook iOS SDK tutorial</a> <a href="https://developers.facebook.com/docs/howtos/feed-dialog-using-ios-sdk/">Step 2. 'Backwards compatability'</a><br />
-	* Add ```
-[(KHSocialPlugin*)[self.viewController getCommandInstance:@"KHSocialPlugin"] 
-
-
-
-	application:application didFinishLaunchingWithOptions:launchOptions];
+	* Add ````
+	[(KHSocialPlugin*)[self.viewController getCommandInstance:@"KHSocialPlugin"] application:application didFinishLaunchingWithOptions:launchOptions];
 ``` 
+
 to the bottom of your AppDelegate.m's applicationDidFinishLaunching:withOptions method, right above the return YES; statement
 
 
