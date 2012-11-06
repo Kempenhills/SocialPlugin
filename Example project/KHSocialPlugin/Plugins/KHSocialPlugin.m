@@ -145,7 +145,7 @@
                 spinner = nil;
             });
             
-            if([FBNativeDialogs canPresentShareDialogWithSession:[FBSession activeSession]] && false == 1) {
+            if([FBNativeDialogs canPresentShareDialogWithSession:[FBSession activeSession]]) {
                 [FBNativeDialogs presentShareDialogModallyFrom:blockViewController initialText:textToShare images:img == nil? nil: @[img] urls:url == nil? nil : @[url] handler:^(FBNativeDialogResult result, NSError *error) {
                     if(result == FBNativeDialogResultError) {
                         [[[UIAlertView alloc] initWithTitle:@"Facebook Error" message:@"Could not post to Facebook at this time. Please try again later." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil] show];
