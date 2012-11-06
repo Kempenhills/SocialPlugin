@@ -46,24 +46,16 @@
 		C49AC6FD163AB41A00DD25F7 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FA163AB41A00DD25F7 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C49AC6FE163AB41A00DD25F7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FB163AB41A00DD25F7 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C49AC6FF163AB41A00DD25F7 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FC163AB41A00DD25F7 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		C4FFD5551643EF9100E9AF3D /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FFD5521643EF4100E9AF3D /* libCordova.a */; };
 		C4FFD5781643F09C00E9AF3D /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FFD5771643F09C00E9AF3D /* FacebookSDK.framework */; };
 		C4FFD57A1643F0A400E9AF3D /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C4FFD5791643F0A400E9AF3D /* FacebookSDKResources.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C4FFD5511643EF4100E9AF3D /* PBXContainerItemProxy */ = {
+		C496E6F016494EBA00A0F997 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 68A32D7114102E1C006B237C;
-			remoteInfo = CordovaLib;
-		};
-		C4FFD5531643EF8C00E9AF3D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
 		};
 /* End PBXContainerItemProxy section */
@@ -78,7 +70,7 @@
 		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "../../../Lib/Cordova-2.2.0/lib/ios/CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "../../../../Lib/Cordova-2.2.0/lib/ios/CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		301BF5B4109A6A2B0062928A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		301BF5B6109A6A2B0062928A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -157,7 +149,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C40A06B11647CBF80011C230 /* Twitter.framework in Frameworks */,
-				C4FFD5551643EF9100E9AF3D /* libCordova.a in Frameworks */,
 				C49AC6FD163AB41A00DD25F7 /* Accounts.framework in Frameworks */,
 				C49AC6FE163AB41A00DD25F7 /* AdSupport.framework in Frameworks */,
 				C49AC6FF163AB41A00DD25F7 /* Social.framework in Frameworks */,
@@ -339,10 +330,10 @@
 			path = se.lproj;
 			sourceTree = "<group>";
 		};
-		C4FFD54E1643EF4100E9AF3D /* Products */ = {
+		C496E6ED16494EBA00A0F997 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C4FFD5521643EF4100E9AF3D /* libCordova.a */,
+				C496E6F116494EBA00A0F997 /* libCordova.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -401,7 +392,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C4FFD5541643EF8C00E9AF3D /* PBXTargetDependency */,
 			);
 			name = KHSocialPlugin;
 			productName = KHSocialPlugin;
@@ -434,7 +424,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C4FFD54E1643EF4100E9AF3D /* Products */;
+					ProductGroup = C496E6ED16494EBA00A0F997 /* Products */;
 					ProjectRef = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
 				},
 			);
@@ -446,11 +436,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C4FFD5521643EF4100E9AF3D /* libCordova.a */ = {
+		C496E6F116494EBA00A0F997 /* libCordova.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libCordova.a;
-			remoteRef = C4FFD5511643EF4100E9AF3D /* PBXContainerItemProxy */;
+			remoteRef = C496E6F016494EBA00A0F997 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -513,14 +503,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C4FFD5541643EF8C00E9AF3D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = CordovaLib;
-			targetProxy = C4FFD5531643EF8C00E9AF3D /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1F766FDC13BBADB100FB74C0 /* Localizable.strings */ = {
