@@ -19,7 +19,10 @@ First we must include all the right files to our project.
 <br />application:application didFinishLaunchingWithOptions:launchOptions];
 </code> to the bottom of your AppDelegate.m's applicationDidFinishLaunching:withOptions method, right above the return YES; statement
 	* Add the following block to the AppDelegate.m 
+    
+
 ``` 
+
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
         KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
     return [khsp application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
@@ -29,7 +32,9 @@ First we must include all the right files to our project.
     KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
     [khsp applicationDidBecomeActive:application];
 }
+
 ```
+
 	* Add Twitter.framework to your project's frameworks in Target -> Build Phases -> Link binary with library
 	* Take a look at the example project if you think you did something wrong
 
