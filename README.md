@@ -37,7 +37,8 @@ First we must include all the right files to our project.
 
 Thats all for iOS, Happy sharing!
 
-3. ### JS Calls
+______________________________
+
 **The javascript calls are easy to learn. Check out the example project for further reference!**
 
 ```javascript
