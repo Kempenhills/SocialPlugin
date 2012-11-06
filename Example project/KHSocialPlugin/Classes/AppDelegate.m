@@ -104,7 +104,6 @@
         [[UIApplication sharedApplication] setStatusBarOrientation:newOrient];
     }
     
-    //TODO this causes the plugin to fail :( sad
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
