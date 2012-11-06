@@ -109,7 +109,7 @@
 - (void) FBGetLoginStatus:(CDVInvokedUrlCommand*)command; {
     CDVPluginResult* result = nil;
     NSString* javascript = nil;
-    if([[FBSession activeSession] isOpen] && self.facebook) {
+    if([[FBSession activeSession] isOpen]) {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:YES];
         javascript = [result toSuccessCallbackString:command.callbackId];
     } else {
@@ -145,7 +145,7 @@
                 spinner = nil;
             });
             
-            if([FBNativeDialogs canPresentShareDialogWithSession:[FBSession activeSession]]) {
+            if([FBNativeDialogs canPresentShareDialogWithSession:[FBSession activeSession]] && false == 1) {
                 [FBNativeDialogs presentShareDialogModallyFrom:blockViewController initialText:textToShare images:img == nil? nil: @[img] urls:url == nil? nil : @[url] handler:^(FBNativeDialogResult result, NSError *error) {
                     if(result == FBNativeDialogResultError) {
                         [[[UIAlertView alloc] initWithTitle:@"Facebook Error" message:@"Could not post to Facebook at this time. Please try again later." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil] show];
@@ -161,15 +161,19 @@
             } else {
                 if(self.facebook) {
                     //TODO - Use graph API to send a photo to your album before trying to post!
-                    #warning Uploading local image files to Facebook has not yet been supported with the deprecated API. It may or may not be in a future release. Users wielding iOS6 and having logging Logged into Facebook via settings will be able to post local image files without problems.
+                    #warning Uploading local image files to Facebook has not yet been supported with the deprecated API. It may or may not be in a future release. Users wielding iOS6 and having logged into Facebook via settings will be able to post local image files without problems.
     
                     NSDictionary *params = @{
                         @"name":            FB_APP_DISPLAY_NAME,
                         @"caption":         FB_APP_CAPTION,
-                        @"description" :    FB_APP_DESCRIPTION,
-                        @"link" :           url == nil? nil : [url absoluteString],
-                        @"picture" :        [imageURL isFileURL]? @"" : [imageURL absoluteString]
+                        @"description" :    FB_APP_DESCRIPTION
                     };
+                    if(url != nil) {
+                        [params setValue:url forKey:@"link"];
+                    }
+                    if(imageURL != nil && [imageURL isFileURL]) {
+                        [params setValue:[imageURL absoluteString] forKey:@"picture"];
+                    }
                     
                     [self.facebook dialog:@"feed" andParams:[params mutableCopy] andDelegate:nil];
                 }

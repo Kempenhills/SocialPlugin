@@ -10,7 +10,6 @@
 	function KHSocialPlugin() {}
 
     //#     FACEBOOK
-
 	// Call this to register for push notifications and retreive a deviceToken
 	KHSocialPlugin.prototype.FBAuthorize = function(cb) {
 		cordova.exec(cb, null, "KHSocialPlugin", "FBAuthorize", []);
