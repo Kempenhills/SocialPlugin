@@ -47,7 +47,6 @@
 - (void) application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions; {
     if (FBSession.activeSession.state == FBSessionStateCreatedTokenLoaded) {
         [self openSession];
-    } else {
     }
 }
 
