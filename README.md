@@ -34,10 +34,23 @@ First we must include all the right files to our project.
     [khsp applicationDidBecomeActive:application];
 }
 ```
-   
-      * Take a look at the example project if you think you did something wrong
 
+Thats all for iOS, Happy sharing!
 
+3. ### JS Calls
+**The javascript calls are easy to learn. Check out the example project for further reference!**
+```javascript
+
+navigator.camera.getPicture(function(imgURI){
+        window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new Kempenhills Social Plugin! Using local images!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
+    }, function(e){}, {
+        quality:            40,
+        destinationType:    Camera.DestinationType.FILE_URI,
+        sourceType :        Camera.PictureSourceType.PHOTOLIBRARY,
+        correctOrientation: true
+    });
+
+```
 
 ## MIT LICENSE
 
