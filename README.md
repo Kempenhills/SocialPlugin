@@ -14,6 +14,7 @@ First we must include all the right files to our project.
 2. ### iOS
 	* Copy the content of native/ios/ into your project's plugins group
 	* Add the mapping 'KHSocialPlugin' -> 'KHSocialPlugin' to cordova.plist
+    * Add Twitter.framework to your project's frameworks in Target -> Build Phases -> Link binary with library
 	* Include the Facebook SDK **AND** Deprecated header. <a href="https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/">Facebook iOS SDK tutorial</a> <a href="https://developers.facebook.com/docs/howtos/feed-dialog-using-ios-sdk/">Step 2. 'Backwards compatability'</a><br />
 	* Add <code>
     [(KHSocialPlugin*)[self.viewController getCommandInstance:@"KHSocialPlugin"]
@@ -33,8 +34,8 @@ First we must include all the right files to our project.
     [khsp applicationDidBecomeActive:application];
 }
 ```
-   * Add Twitter.framework to your project's frameworks in Target -> Build Phases -> Link binary with library
-   * Take a look at the example project if you think you did something wrong
+   
+      * Take a look at the example project if you think you did something wrong
 
 
 
