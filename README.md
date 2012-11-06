@@ -32,11 +32,9 @@ First we must include all the right files to our project.
     KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
     [khsp applicationDidBecomeActive:application];
 }
-
 ```
-
-	* Add Twitter.framework to your project's frameworks in Target -> Build Phases -> Link binary with library
-	* Take a look at the example project if you think you did something wrong
+    * Add Twitter.framework to your project's frameworks in Target -> Build Phases -> Link binary with library
+    * Take a look at the example project if you think you did something wrong
 
 
 
