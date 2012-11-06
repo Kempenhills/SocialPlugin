@@ -104,11 +104,11 @@
         [[UIApplication sharedApplication] setStatusBarOrientation:newOrient];
     }
     
-    KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
-    [khsp application:application didFinishLaunchingWithOptions:launchOptions];
-    
+    //TODO this causes the plugin to fail :( sad
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    [(KHSocialPlugin*)[self.viewController getCommandInstance:@"KHSocialPlugin"] application:application didFinishLaunchingWithOptions:launchOptions];
     
     return YES;
 }

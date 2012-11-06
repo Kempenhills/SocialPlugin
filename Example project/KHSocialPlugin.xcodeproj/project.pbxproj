@@ -41,6 +41,7 @@
 		30A0434914DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434614DC770100060A13 /* Localizable.strings */; };
 		30E1352710E2C1420031B30D /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30E1352610E2C1420031B30D /* Cordova.plist */; };
 		30E5649213A7FCAF007403D8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E5649113A7FCAF007403D8 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C40A06B11647CBF80011C230 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C40A06B01647CBF80011C230 /* Twitter.framework */; };
 		C49AC6F3163AB29100DD25F7 /* KHSocialPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = C49AC6F2163AB29100DD25F7 /* KHSocialPlugin.m */; };
 		C49AC6FD163AB41A00DD25F7 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FA163AB41A00DD25F7 /* Accounts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		C49AC6FE163AB41A00DD25F7 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49AC6FB163AB41A00DD25F7 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -77,7 +78,7 @@
 		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "../../../Lib/iOS-Cordova-2.1.0/CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "../../../Lib/Cordova-2.2.0/lib/ios/CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		301BF5B4109A6A2B0062928A /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		301BF5B6109A6A2B0062928A /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
@@ -109,6 +110,7 @@
 		30E5649113A7FCAF007403D8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* KHSocialPlugin-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHSocialPlugin-Prefix.pch"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* KHSocialPlugin-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "KHSocialPlugin-Info.plist"; path = "../KHSocialPlugin-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		C40A06B01647CBF80011C230 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		C49AC6F1163AB29100DD25F7 /* KHSocialPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHSocialPlugin.h; sourceTree = "<group>"; };
 		C49AC6F2163AB29100DD25F7 /* KHSocialPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHSocialPlugin.m; sourceTree = "<group>"; };
 		C49AC6FA163AB41A00DD25F7 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -154,6 +156,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C40A06B11647CBF80011C230 /* Twitter.framework in Frameworks */,
 				C4FFD5551643EF9100E9AF3D /* libCordova.a in Frameworks */,
 				C49AC6FD163AB41A00DD25F7 /* Accounts.framework in Frameworks */,
 				C49AC6FE163AB41A00DD25F7 /* AdSupport.framework in Frameworks */,
@@ -262,6 +265,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C40A06B01647CBF80011C230 /* Twitter.framework */,
 				C4FFD5771643F09C00E9AF3D /* FacebookSDK.framework */,
 				C4FFD5791643F0A400E9AF3D /* FacebookSDKResources.bundle */,
 				C4FFD5561643EFE900E9AF3D /* DeprecatedHeaders */,
