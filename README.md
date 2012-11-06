@@ -3,6 +3,11 @@
 ![KempenHills Logo](http://en.gravatar.com/userimage/41641793/5ecd217ad2bec9299b198ff39a95b463.png?size=200)
 
 The Social Sharing plugin makes your life a lot easier when it comes to interacting with either Facebook or Twitter from a Cordova app!
+With this plugin it is fairly simple to authenticate and post to Facebook and Twitter. It focuses on the Single Sign On techniques both the Facebook and Twitter SDK use. 
+
+When a user hasn't logged in to his Native Facebook settings or uses iOS5.x the Facebook SDK falls back to the old style. Meaning dialogs and app-switching when logging in.
+
+Feel free to improve or upgrade the plugin!
 
 ## How to use
 First we must include all the right files to our project.
