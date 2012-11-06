@@ -21,7 +21,7 @@ First we must include all the right files to our project.
 	* Add the following block to the AppDelegate.m 
 ``` 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
+        KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
     return [khsp application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
