@@ -39,6 +39,7 @@ Thats all for iOS, Happy sharing!
 
 3. ### JS Calls
 **The javascript calls are easy to learn. Check out the example project for further reference!**
+
 ```javascript
 
 navigator.camera.getPicture(function(imgURI){
