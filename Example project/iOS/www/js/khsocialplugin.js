@@ -1,10 +1,9 @@
 //
 // KHSocialPlugin.js
 //
-// Created by Roy Derks on 26/10/12.
+// Created by KempenHills ICT B.V. on 26/10/12.
 //
-//
-// Copyright (C) 2012 KempenHills ICT BV
+// Copyright (C) 2012 KempenHills ICT B.V.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the
 // Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
@@ -16,16 +15,18 @@
 // PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
 //  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
-// Copyright 2012 Kempenhills ICT BV. All rights reserved.
 
 (function(cordova) {
 
 	function KHSocialPlugin() {}
 
     //#     FACEBOOK
-	// Call this to register for push notifications and retreive a deviceToken
 	KHSocialPlugin.prototype.FBAuthorize = function(cb) {
 		cordova.exec(cb, null, "KHSocialPlugin", "FBAuthorize", []);
+	};
+ 
+    KHSocialPlugin.prototype.FBUnauthorize = function() {
+		cordova.exec(null, null, "KHSocialPlugin", "FBUnauthorize", []);
 	};
  
     KHSocialPlugin.prototype.FBGetLoginStatus = function(cb, failCb) {

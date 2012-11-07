@@ -1,18 +1,18 @@
-#Social Sharing
+# Social Sharing
 
-![KempenHills Logo](http://en.gravatar.com/userimage/41641793/5ecd217ad2bec9299b198ff39a95b463.png?size=200)
+<a href="http://www.kempenhills.nl">![KempenHills ICT B.V. Logo](http://en.gravatar.com/userimage/41641793/5ecd217ad2bec9299b198ff39a95b463.png?size=200)</a>
 
 The Social Sharing plugin makes your life a lot easier when it comes to interacting with either Facebook or Twitter from a Cordova app!
 With this plugin it is fairly simple to authenticate and post to Facebook and Twitter. It focuses on the Single Sign On techniques both the Facebook and Twitter SDK use. 
 
-When a user hasn't logged in to his Native Facebook settings or uses iOS5.x the Facebook SDK falls back to the old style. Meaning dialogs and app-switching when logging in and or posting.
+When a user hasn't logged in to his Native Facebook settings or uses iOS5.x the Facebook SDK falls back to the old style. This means there will be dialogs instead of the Facebookpanel and app-switching when logging in and or posting.
 
-In the case of Twitter it brings up the Tweetpanel AND a alertView to log in to Twitter.
+If a user has not logged in to Twitter yet via settings an alertView is presented to the user, asking whether the user wants to log in or not.
 
 Feel free to improve or upgrade the plugin!
 
 ## How to use
-First we must include all the right files to our project.
+First we must include all the files to our project.
 
 1. ### Javascript
 	* Copy the www/js/ folder into your project.
@@ -25,7 +25,7 @@ First we must include all the right files to our project.
 	* Include the Facebook SDK **AND** Deprecated header. <a href="https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/">Facebook iOS SDK tutorial</a> <a href="https://developers.facebook.com/docs/howtos/feed-dialog-using-ios-sdk/">Step 2. 'Backwards compatability'</a><br />
 	* Replace the last part of the AppDelegate.m's application:application didFinishLaunchingWithOptions:launchOptions with the following:
     
-```javascript
+```objc
 self.window.rootViewController = self.viewController;
 [self.window makeKeyAndVisible];
 
@@ -33,11 +33,11 @@ self.window.rootViewController = self.viewController;
 
 return YES;
 ```
-
+ 
 * Add the following block to the AppDelegate.m
     
 
-```
+```objc
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
         KHSocialPlugin* khsp = [self.viewController getCommandInstance:@"KHSocialPlugin"];
     return [khsp application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
@@ -58,7 +58,7 @@ ______________________________
 ```javascript
 
 navigator.camera.getPicture(function(imgURI){
-        window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new Kempenhills Social Plugin! Using local images!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
+        window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin! Using local images!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
     }, function(e){}, {
         quality:            40,
         destinationType:    Camera.DestinationType.FILE_URI,
@@ -70,7 +70,7 @@ navigator.camera.getPicture(function(imgURI){
 
 ## MIT LICENSE
 
-Copyright (C) 2012 KempenHills ICT BV
+Copyright (C) 2012 KempenHills ICT B.V.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

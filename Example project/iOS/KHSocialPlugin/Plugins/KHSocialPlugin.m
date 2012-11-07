@@ -4,7 +4,7 @@
 //
 //  Created by KempenHills on 10/26/12.
 //
-//  Copyright (C) 2012 KempenHills ICT BV
+//  Copyright (C) 2012 KempenHills ICT B.V.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in
 //  theSoftware without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
@@ -102,6 +102,16 @@
     [self openSession];
 }
 
+- (void) FBUnauthorize:(CDVInvokedUrlCommand*)command; {
+    @try {
+        [[FBSession activeSession] closeAndClearTokenInformation];
+        [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] toErrorCallbackString:command.callbackId]];
+    } @catch (NSException* ex) {
+        NSLog(@"%@", [ex reason]);
+        [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] toErrorCallbackString:command.callbackId]];
+    }
+}
+
 /*
     Reports if the current FBSession is valid and opened to the assigned callback.
 */
@@ -162,13 +172,13 @@
                     //TODO - Use graph API to send a photo to your album before trying to post!
                     #warning Uploading local image files to Facebook has not yet been supported with the deprecated API. It may or may not be in a future release. Users wielding iOS6 and having logged into Facebook via settings will be able to post local image files without problems.
     
-                    NSDictionary *params = @{
+                    NSMutableDictionary *params = [@{
                         @"name":            FB_APP_DISPLAY_NAME,
                         @"caption":         FB_APP_CAPTION,
                         @"description" :    FB_APP_DESCRIPTION
-                    };
+                    } mutableCopy];
                     if(url != nil) {
-                        [params setValue:url forKey:@"link"];
+                        [params setValue:[url absoluteString] forKey:@"link"];
                     }
                     if(imageURL != nil && [imageURL isFileURL]) {
                         [params setValue:[imageURL absoluteString] forKey:@"picture"];
@@ -287,8 +297,9 @@
 }
 
 -(void) TWTweetToUserTimeline:(CDVInvokedUrlCommand*)command; {
+    //Workaround for presenting the TWTweetcontroller before the CDVImagePicker is dismissed.
     if([[self.viewController presentedViewController] isBeingDismissed]) {
-        [self performSelector:@selector(TWTweetToUserTimeline:) withObject:command afterDelay:0.3];
+        [self performSelector:@selector(TWTweetToUserTimeline:) withObject:command afterDelay:0.1];
         return;
     };
     @try {

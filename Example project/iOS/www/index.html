@@ -1,22 +1,23 @@
-<!DOCTYPE html>
 <!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
+//
+// KHSocialPlugin.js
+//
+// Created by KempenHills ICT B.V. on 26/10/12.
+//
+// Copyright (C) 2012 KempenHills ICT B.V.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the
+// Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
+// Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+// PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+//  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
 -->
+<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -40,7 +41,7 @@
             }
             
             function FBPostDemoWallpost() {
-                window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new Kempenhills Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','https://github.com/Kempenhills/SocialPlugin');
+                window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','https://github.com/Kempenhills/SocialPlugin');
             }
             
             
@@ -50,7 +51,7 @@
             
             function FBPostDemoWallpostLocalImage() {
                 navigator.camera.getPicture(function(imgURI){
-                    window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new Kempenhills Social Plugin! Using local images!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
+                    window.plugins.KHSocialPlugin.FBPostToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin! Using local images!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
                 }, function(e){}, {
                     quality:            40,
                     destinationType:    Camera.DestinationType.FILE_URI,
@@ -65,12 +66,12 @@
             }
             
             function TWTweetToUserTimeline() {
-                window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new Kempenhills Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','www.google.nl');
+                window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','www.google.nl');
             }
             
             function TWTweetToUserTimelineLocalImage() {
                 navigator.camera.getPicture(function(imgURI){
-                     window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new Kempenhills Social Plugin!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
+                     window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
                 }, function(e){}, {
                     quality:            40,
                     destinationType:    Camera.DestinationType.FILE_URI,
@@ -83,7 +84,7 @@
             
             function TWTweetToUserTimelineTextOnly() {
                 window.plugins.KHSocialPlugin.TWGetLoginStatus(function(success) {
-                    if(success)window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new Kempenhills Social Plugin!');
+                    if(success)window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin!');
                 }, function(success) {
                     if(!success) {
                         alert('Can\'t post to Twitter');
@@ -94,11 +95,12 @@
     </head>
     <body>
             <input type="button" value="Login to Facebook" onclick="javascript:window.plugins.KHSocialPlugin.FBAuthorize()"/><br />
+            <input type="button" value="Logout from Facebook" onclick="javascript:window.plugins.KHSocialPlugin.FBUnauthorize()"/><br />
             <input type="button" value="Facebook status" onclick="javascript:FBGetLoginStatus()"/><br />
             <input type="button" value="Facebook wall post text only" onclick="javascript:FBPostDemoWallpostTextOnly()"/><br />
             <input type="button" value="Facebook wall post http:// image" onclick="javascript:FBPostDemoWallpost()"/><br />
             <input type="button" value="Facebook wall post file:// local image" onclick="javascript:FBPostDemoWallpostLocalImage()"/><br />
-            <input type="button" value="Facebook AppRequest" onclick="javascript:window.plugins.KHSocialPlugin.FBSendAppRequestWithMessage('Check out the brand new Kempenhills Social Plugin!')"/><br />
+            <input type="button" value="Facebook AppRequest" onclick="javascript:window.plugins.KHSocialPlugin.FBSendAppRequestWithMessage('Check out the brand new KempenHills ICT B.V. Social Plugin!')"/><br />
         
             <br />
         
