@@ -13,6 +13,5 @@ build/*
 xcuserdata
 profile
 *.moved-aside
-.DS_StoreExample project/Android/gen
-Example project/Android/bin
+Example project/Android/gen
 Example project/Android/bin
