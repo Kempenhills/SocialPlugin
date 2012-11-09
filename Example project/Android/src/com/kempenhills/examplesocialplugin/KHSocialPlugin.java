@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.kempenhills.khsocialplugin;
+package com.kempenhills.examplesocialplugin;
 
 import android.app.Activity;
 import android.os.Bundle;

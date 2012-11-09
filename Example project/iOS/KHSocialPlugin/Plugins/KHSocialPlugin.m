@@ -236,11 +236,11 @@
     switch (state) {
         case FBSessionStateOpen: {
                 NSLog(@"%@", @"Facebook has succesfully connected and logged into your account.");
-                if(nil == self.facebook) {
-                    self.facebook = [[Facebook alloc] initWithAppId:[[FBSession activeSession] appID] andDelegate:nil];
-                    self.facebook.accessToken = [[FBSession activeSession] accessToken];
-                    self.facebook.expirationDate = [[FBSession activeSession] expirationDate];
-                }
+                
+                self.facebook = [[Facebook alloc] initWithAppId:[[FBSession activeSession] appID] andDelegate:nil];
+                self.facebook.accessToken = [[FBSession activeSession] accessToken];
+                self.facebook.expirationDate = [[FBSession activeSession] expirationDate];
+            
                 if(callbacks != nil) {
                     if([callbacks objectForKey:@"FBAuthorize"]) {
                         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];

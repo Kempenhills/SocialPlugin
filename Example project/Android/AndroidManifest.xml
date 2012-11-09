@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.kempenhills.khsocialplugin" android:versionName="1.1" android:versionCode="5" android:hardwareAccelerated="true">
+      package="com.kempenhills.examplesocialplugin" android:versionName="1.1" android:versionCode="5" android:hardwareAccelerated="true">
     
     <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="16"/>  
     
@@ -58,7 +58,9 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> 
+        <meta-data android:value="@string/app_id" android:name="com.facebook.sdk.ApplicationId"/>
+        <activity android:name="com.facebook.LoginActivity" android:label="@string/app_name"></activity>
     </application>
 
 </manifest> 
