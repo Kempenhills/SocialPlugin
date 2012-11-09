@@ -7,7 +7,7 @@ With this plugin it is fairly simple to authenticate and post to Facebook and Tw
 
 When a user hasn't logged in to his Native Facebook settings or uses iOS5.x the Facebook SDK falls back to the old style. This means there will be dialogs instead of the Facebookpanel and app-switching when logging in and or posting.
 
-If a user has not logged in to Twitter yet via settings an alertView is presented to the user, asking whether the user wants to log in or not.
+If a user has not logged in to Twitter yet via settings, an alertView is presented to the user, asking whether the user wants to log in or not.
 
 Feel free to improve or upgrade the plugin!
 
