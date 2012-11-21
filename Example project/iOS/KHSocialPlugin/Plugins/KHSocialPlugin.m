@@ -19,9 +19,9 @@
 
 #import "KHSocialPlugin.h"
 
-#define FB_APP_DISPLAY_NAME     @"Kempenhills Social Sharing"
-#define FB_APP_CAPTION          @"Kempenhills Social Sharing on GITHub"
-#define FB_APP_DESCRIPTION      @"The Social Sharing plugin makes your life allot easier when it comes to posting stuff to either Facebook or Twitter from a Cordova app!"
+#define FB_APP_DISPLAY_NAME     @""
+#define FB_APP_CAPTION          @""
+#define FB_APP_DESCRIPTION      @""
 
 @implementation KHSocialPlugin
 
@@ -32,14 +32,20 @@
     Create NSMutableDictionary from arguments. [{ key: value... }]  String from JS as command.arguments->0;
 */
 - (NSMutableDictionary *)extractParamsFromCDVCommand:(CDVInvokedUrlCommand *)command {
-    NSError* error = nil;
-    NSMutableDictionary* params = [NSJSONSerialization JSONObjectWithData:[[command.arguments objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-    
-    if(error) {
-        NSLog(@"%@", [error localizedDescription]);
+    @try {
+        NSError* error = nil;
+        NSLog(@"converting to JSON:  %@", [command.arguments objectAtIndex:0]);
+        NSMutableDictionary* params = [NSJSONSerialization JSONObjectWithData:[[command.arguments objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+        
+        if(error) {
+            NSLog(@"JSON conversion error : %@", [error localizedDescription]);
+            return nil;
+        }
+        return params;
+    } @catch (NSException* ex) {
+        NSLog(@"JSON conversion error : %@", [ex reason]);
         return nil;
     }
-    return params;
 }
 /* 
     This is simply a forward from the AppDelegate's didFinishLaunchingWithOptions method.
@@ -69,6 +75,11 @@
 */
 -(void)applicationDidBecomeActive:(UIApplication *)application; {
     [[FBSession activeSession] handleDidBecomeActive];
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application{
+    [[FBSession activeSession] close];
 }
 
 #pragma mark -
@@ -118,7 +129,7 @@
 - (void) FBGetLoginStatus:(CDVInvokedUrlCommand*)command; {
     CDVPluginResult* result = nil;
     NSString* javascript = nil;
-    if([[FBSession activeSession] isOpen]) {
+    if([[FBSession activeSession] isOpen] && self.facebook.isSessionValid) {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:YES];
         javascript = [result toSuccessCallbackString:command.callbackId];
     } else {
@@ -138,10 +149,10 @@
         
         __strong NSString* textToShare = [params objectForKey:@"textToShare"];
         __strong NSString* imageUrlString = [params objectForKey:@"imageUrl"];
-        __strong NSURL* url = [NSURL URLWithString:[params objectForKey:@"linkUrl"]];
+        __strong NSURL* url = [[params objectForKey:@"linkUrl"] isMemberOfClass:[NSNull class]]? nil:[NSURL URLWithString:[params objectForKey:@"linkUrl"]];
         
         __block  UIImage* img = nil;
-        __strong NSURL* imageURL = [NSURL URLWithString:imageUrlString];
+        __strong NSURL* imageURL = [imageUrlString isMemberOfClass:[NSNull class]]? nil:[NSURL URLWithString:imageUrlString];
         __block UIActivityIndicatorView* spinner = nil;
         __block UIViewController* blockViewController = self.viewController;
         
@@ -162,20 +173,19 @@
                         [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:YES] toSuccessCallbackString:command.callbackId]];
                     }
                     if(error) {
-                        NSLog(@"%@",[error localizedDescription]);
+                        NSLog(@"completionBlock : %@",[error localizedDescription]);
                         
                         [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]] toErrorCallbackString:command.callbackId]];
                     }
                 }];
             } else {
                 if(self.facebook) {
-                    //TODO - Use graph API to send a photo to your album before trying to post!
                     #warning Uploading local image files to Facebook has not yet been supported with the deprecated API. It may or may not be in a future release. Users wielding iOS6 and having logged into Facebook via settings will be able to post local image files without problems.
     
-                    NSMutableDictionary *params = [@{
-                        @"name":            FB_APP_DISPLAY_NAME,
+                    __block NSMutableDictionary *params = [@{
                         @"caption":         FB_APP_CAPTION,
-                        @"description" :    FB_APP_DESCRIPTION
+                        @"description" :    FB_APP_DESCRIPTION,
+                        @"name":            FB_APP_DISPLAY_NAME
                     } mutableCopy];
                     if(url != nil) {
                         [params setValue:[url absoluteString] forKey:@"link"];
@@ -184,7 +194,9 @@
                         [params setValue:[imageURL absoluteString] forKey:@"picture"];
                     }
                     
-                    [self.facebook dialog:@"feed" andParams:[params mutableCopy] andDelegate:nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.facebook dialog:@"feed" andParams:params andDelegate:nil];
+                    });
                 }
             }
             img = nil;
@@ -234,9 +246,10 @@
                       error:(NSError *)error
 {
     switch (state) {
+        case FBSessionStateOpenTokenExtended:
         case FBSessionStateOpen: {
-                NSLog(@"%@", @"Facebook has succesfully connected and logged into your account.");
-                
+                NSLog(@"%@", @"Facebook has succesfully connected and logged into with account.");
+                NSLog(@"%@", [[FBSession activeSession] appID]);
                 self.facebook = [[Facebook alloc] initWithAppId:[[FBSession activeSession] appID] andDelegate:nil];
                 self.facebook.accessToken = [[FBSession activeSession] accessToken];
                 self.facebook.expirationDate = [[FBSession activeSession] expirationDate];
@@ -279,10 +292,13 @@
 */
 - (void)openSession
 {
-    [FBSession openActiveSessionWithPublishPermissions:@[@"publish_stream"] defaultAudience:FBSessionDefaultAudienceEveryone allowLoginUI:YES
+    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+            [self sessionStateChanged:session state:status error:error];
+    }];
+    /*[FBSession openActiveSessionWithReadPermissions:@[] allowLoginUI:YES
         completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
             [self sessionStateChanged:session state:state error:error];
-    }];
+    }];*/
 }
 
 #pragma mark -
@@ -320,7 +336,7 @@
             spinner = nil;
             
             [tweetController addImage:img];
-            if([params objectForKey:@"linkUrl"])
+            if(![[params objectForKey:@"linkUrl"] isMemberOfClass:[NSNull class]])
                 [tweetController addURL:[NSURL URLWithString:[params objectForKey:@"linkUrl"]]];
             [tweetController setInitialText:[params objectForKey:@"textToShare"]];
             
@@ -339,7 +355,7 @@
             [self.viewController presentViewController:tweetController animated:YES completion:nil];
         };
         
-        if([params objectForKey:@"imageUrl"]) {
+        if(![[params objectForKey:@"imageUrl"] isMemberOfClass:[NSNull class]]) {
             __strong NSURL* imageUrl = [NSURL URLWithString:[params objectForKey:@"imageUrl"]];
             if([imageUrl isFileURL]) {
                 //wait 1 sec in case of file pickers etc....
@@ -367,5 +383,56 @@
     }
 }
 
-@end
+#pragma mark -
+#pragma mark Actionsheets
 
+-(void)PresentActionSheet:(CDVInvokedUrlCommand*)command; {
+    if([callbacks respondsToSelector:@selector(objectAtIndex:)]) {
+        [callbacks setObject:command forKey:@"PresentActionSheet"];
+    } else {
+        callbacks = [@{ @"PresentActionSheet" : command } mutableCopy];
+    }
+    UIActionSheet* as = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"Mail", nil];
+    [as setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [as showInView:self.viewController.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    CDVInvokedUrlCommand* command = [callbacks objectForKey:@"PresentActionSheet"];
+    switch(buttonIndex) {
+        case 0:
+            {
+            
+            if([[FBSession activeSession] isOpen] && self.facebook.isSessionValid && [[FBSession activeSession].permissions containsObject:@"publish_stream"]) {
+                [self FBPostToUserTimeline:command];
+            } else {
+                if([[FBSession activeSession] isOpen] && self.facebook.isSessionValid) {
+                    [[FBSession activeSession] reauthorizeWithPublishPermissions:@[@"publish_stream"] defaultAudience:FBSessionDefaultAudienceEveryone completionHandler:^(FBSession *session, NSError *error) {
+                     if(!error) [self FBPostToUserTimeline:command];
+                    }];
+                }
+                else {
+                    [FBSession openActiveSessionWithReadPermissions:@[] allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                        [self sessionStateChanged:session state:status error:error];
+                        if(!error) [self FBPostToUserTimeline:command];
+                        
+                    }];
+                }
+            }
+            }
+        break;
+        case 1:
+            [self TWTweetToUserTimeline:command];
+        break;
+        case 2:
+        {
+            MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+            [controller setSubject:@"Ik wil graag deze app met je delen"];
+            NSDictionary* arr = [self extractParamsFromCDVCommand:command];
+            [controller setMessageBody:[arr objectForKey:@"textToShare"] isHTML:YES];
+            [self.viewController presentModalViewController:controller animated:YES];
+        }
+            break;
+    }
+}
+@end
