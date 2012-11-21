@@ -54,6 +54,9 @@
         })]);
     }
  
+    KHSocialPlugin.prototype.PresentActionSheet = function(textToShare,imageUrl,linkUrl) {
+        cordova.exec(null, null, "KHSocialPlugin", "PresentActionSheet", [JSON.stringify({ 'textToShare': textToShare, 'imageUrl' : imageUrl, 'linkUrl': linkUrl})]);
+    }
  
 	if(!window.plugins) window.plugins = {};
 	window.plugins.KHSocialPlugin = new KHSocialPlugin();
