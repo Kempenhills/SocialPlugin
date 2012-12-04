@@ -92,7 +92,7 @@
     For detailed instructions follow the iOS SDK Tutorial on developer.facebook.com.
  
     <key>FacebookAppID</key>
-	<string>360051114078976</string>
+	<string><AppID></string>
  
     <key>CFBundleURLTypes</key>
 	<array>
@@ -274,15 +274,21 @@
         default:
             break;
     }
-
+    
+    
     if (error) {
-        UIAlertView *alertView = [[UIAlertView alloc]
+        if([error code] == 2) {
+            #warning change Facebook unauth message...
+            [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Set FB error msg" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        }
+        //TODO Make it use A debug variable.
+        /*UIAlertView *alertView = [[UIAlertView alloc]
                      initWithTitle:@"Error"
                            message:error.localizedDescription
                           delegate:nil
                  cancelButtonTitle:@"OK"
                  otherButtonTitles:nil];
-        [alertView show];
+        [alertView show];*/
     }    
 }
 
@@ -335,7 +341,7 @@
             [spinner removeFromSuperview];
             spinner = nil;
             
-            [tweetController addImage:img];
+            if(img != nil)[tweetController addImage:img];
             if(![[params objectForKey:@"linkUrl"] isMemberOfClass:[NSNull class]])
                 [tweetController addURL:[NSURL URLWithString:[params objectForKey:@"linkUrl"]]];
             [tweetController setInitialText:[params objectForKey:@"textToShare"]];
@@ -415,7 +421,6 @@
                     [FBSession openActiveSessionWithReadPermissions:@[] allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                         [self sessionStateChanged:session state:status error:error];
                         if(!error) [self FBPostToUserTimeline:command];
-                        
                     }];
                 }
             }
@@ -426,13 +431,24 @@
         break;
         case 2:
         {
-            MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
-            [controller setSubject:@"Ik wil graag deze app met je delen"];
-            NSDictionary* arr = [self extractParamsFromCDVCommand:command];
-            [controller setMessageBody:[arr objectForKey:@"textToShare"] isHTML:YES];
-            [self.viewController presentModalViewController:controller animated:YES];
+            if([MFMailComposeViewController canSendMail]){
+                MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+                [controller setSubject:@"Set Email Subject"];
+                [controller setMailComposeDelegate:self];
+                NSDictionary* arr = [self extractParamsFromCDVCommand:command];
+                [controller setMessageBody:[arr objectForKey:@"textToShare"] isHTML:YES];
+                [self.viewController presentModalViewController:controller animated:YES];
+            } else {
+                [[UIAlertView alloc]initWithTitle:@"Alert" message:@"No Mail account is available on this device." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            }
         }
-            break;
+        break;
     }
 }
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissModalViewControllerAnimated:YES];
+}
+
 @end
+

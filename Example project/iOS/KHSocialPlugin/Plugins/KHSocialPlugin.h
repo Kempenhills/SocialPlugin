@@ -23,7 +23,7 @@
 #import <Twitter/Twitter.h>
 #import <MessageUI/MFMailComposeViewController.h>
 
-@interface KHSocialPlugin : CDVPlugin <UIActionSheetDelegate> {
+@interface KHSocialPlugin : CDVPlugin <UIActionSheetDelegate, MFMailComposeViewControllerDelegate> {
     NSMutableDictionary* callbacks;
     NSArray* arguments;
 }

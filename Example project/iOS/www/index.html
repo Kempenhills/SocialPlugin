@@ -66,7 +66,7 @@
             }
             
             function TWTweetToUserTimeline() {
-                window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','www.google.nl');
+                window.plugins.KHSocialPlugin.TWTweetToUserTimeline('Check out the brand new KempenHills ICT B.V. Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','https://github.com/Kempenhills/SocialPlugin');
             }
             
             function TWTweetToUserTimelineLocalImage() {
@@ -91,6 +91,10 @@
                     }
                 });
             }
+            
+            function PresentActionSheet() {
+                window.plugins.KHSocialPlugin.PresentActionSheet('Check out the brand new KempenHills ICT B.V. Social Plugin!', 'https://a248.e.akamai.net/assets.github.com/images/modules/about_page/octocat.png?1338956357','https://github.com/Kempenhills/SocialPlugin');
+            }
         </script>
     </head>
     <body>
@@ -108,5 +112,9 @@
             <input type="button" value="Twitter tweet text only" onclick="javascript:TWTweetToUserTimelineTextOnly()"/><br />
             <input type="button" value="Twitter tweet" onclick="javascript:TWTweetToUserTimeline()"/><br />
             <input type="button" value="Twitter tweet" onclick="javascript:TWTweetToUserTimelineLocalImage()"/><br />
+        
+            <br />
+            
+            <input type="button" value="Actionsheet" onclick="javascript:PresentActionSheet()"/><br />
     </body>
 </html>
