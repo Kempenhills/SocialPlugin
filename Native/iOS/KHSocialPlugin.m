@@ -4,7 +4,7 @@
 //
 //  Created by KempenHills on 10/26/12.
 //
-//  Copyright (C) 2012 KempenHills ICT BV
+//  Copyright (C) 2012 KempenHills ICT B.V.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in
 //  theSoftware without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the
@@ -19,9 +19,9 @@
 
 #import "KHSocialPlugin.h"
 
-#define FB_APP_DISPLAY_NAME     @"Kempenhills Social Sharing"
-#define FB_APP_CAPTION          @"Kempenhills Social Sharing on GITHub"
-#define FB_APP_DESCRIPTION      @"The Social Sharing plugin makes your life allot easier when it comes to posting stuff to either Facebook or Twitter from a Cordova app!"
+#define FB_APP_DISPLAY_NAME     @""
+#define FB_APP_CAPTION          @""
+#define FB_APP_DESCRIPTION      @""
 
 @implementation KHSocialPlugin
 
@@ -32,14 +32,20 @@
     Create NSMutableDictionary from arguments. [{ key: value... }]  String from JS as command.arguments->0;
 */
 - (NSMutableDictionary *)extractParamsFromCDVCommand:(CDVInvokedUrlCommand *)command {
-    NSError* error = nil;
-    NSMutableDictionary* params = [NSJSONSerialization JSONObjectWithData:[[command.arguments objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
-    
-    if(error) {
-        NSLog(@"%@", [error localizedDescription]);
+    @try {
+        NSError* error = nil;
+        NSLog(@"converting to JSON:  %@", [command.arguments objectAtIndex:0]);
+        NSMutableDictionary* params = [NSJSONSerialization JSONObjectWithData:[[command.arguments objectAtIndex:0] dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:&error];
+        
+        if(error) {
+            NSLog(@"JSON conversion error : %@", [error localizedDescription]);
+            return nil;
+        }
+        return params;
+    } @catch (NSException* ex) {
+        NSLog(@"JSON conversion error : %@", [ex reason]);
         return nil;
     }
-    return params;
 }
 /* 
     This is simply a forward from the AppDelegate's didFinishLaunchingWithOptions method.
@@ -71,6 +77,11 @@
     [[FBSession activeSession] handleDidBecomeActive];
 }
 
+
+- (void)applicationWillTerminate:(UIApplication *)application{
+    [[FBSession activeSession] close];
+}
+
 #pragma mark -
 #pragma mark Facebook
 
@@ -81,7 +92,7 @@
     For detailed instructions follow the iOS SDK Tutorial on developer.facebook.com.
  
     <key>FacebookAppID</key>
-	<string>360051114078976</string>
+	<string><AppID></string>
  
     <key>CFBundleURLTypes</key>
 	<array>
@@ -102,13 +113,23 @@
     [self openSession];
 }
 
+- (void) FBUnauthorize:(CDVInvokedUrlCommand*)command; {
+    @try {
+        [[FBSession activeSession] closeAndClearTokenInformation];
+        [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] toErrorCallbackString:command.callbackId]];
+    } @catch (NSException* ex) {
+        NSLog(@"%@", [ex reason]);
+        [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] toErrorCallbackString:command.callbackId]];
+    }
+}
+
 /*
     Reports if the current FBSession is valid and opened to the assigned callback.
 */
 - (void) FBGetLoginStatus:(CDVInvokedUrlCommand*)command; {
     CDVPluginResult* result = nil;
     NSString* javascript = nil;
-    if([[FBSession activeSession] isOpen]) {
+    if([[FBSession activeSession] isOpen] && self.facebook.isSessionValid) {
         result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:YES];
         javascript = [result toSuccessCallbackString:command.callbackId];
     } else {
@@ -128,10 +149,10 @@
         
         __strong NSString* textToShare = [params objectForKey:@"textToShare"];
         __strong NSString* imageUrlString = [params objectForKey:@"imageUrl"];
-        __strong NSURL* url = [NSURL URLWithString:[params objectForKey:@"linkUrl"]];
+        __strong NSURL* url = [[params objectForKey:@"linkUrl"] isMemberOfClass:[NSNull class]]? nil:[NSURL URLWithString:[params objectForKey:@"linkUrl"]];
         
         __block  UIImage* img = nil;
-        __strong NSURL* imageURL = [NSURL URLWithString:imageUrlString];
+        __strong NSURL* imageURL = [imageUrlString isMemberOfClass:[NSNull class]]? nil:[NSURL URLWithString:imageUrlString];
         __block UIActivityIndicatorView* spinner = nil;
         __block UIViewController* blockViewController = self.viewController;
         
@@ -152,29 +173,30 @@
                         [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:YES] toSuccessCallbackString:command.callbackId]];
                     }
                     if(error) {
-                        NSLog(@"%@",[error localizedDescription]);
+                        NSLog(@"completionBlock : %@",[error localizedDescription]);
                         
                         [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[error localizedDescription]] toErrorCallbackString:command.callbackId]];
                     }
                 }];
             } else {
                 if(self.facebook) {
-                    //TODO - Use graph API to send a photo to your album before trying to post!
                     #warning Uploading local image files to Facebook has not yet been supported with the deprecated API. It may or may not be in a future release. Users wielding iOS6 and having logged into Facebook via settings will be able to post local image files without problems.
     
-                    NSDictionary *params = @{
-                        @"name":            FB_APP_DISPLAY_NAME,
+                    __block NSMutableDictionary *params = [@{
                         @"caption":         FB_APP_CAPTION,
-                        @"description" :    FB_APP_DESCRIPTION
-                    };
+                        @"description" :    FB_APP_DESCRIPTION,
+                        @"name":            FB_APP_DISPLAY_NAME
+                    } mutableCopy];
                     if(url != nil) {
-                        [params setValue:url forKey:@"link"];
+                        [params setValue:[url absoluteString] forKey:@"link"];
                     }
                     if(imageURL != nil && [imageURL isFileURL]) {
                         [params setValue:[imageURL absoluteString] forKey:@"picture"];
                     }
                     
-                    [self.facebook dialog:@"feed" andParams:[params mutableCopy] andDelegate:nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.facebook dialog:@"feed" andParams:params andDelegate:nil];
+                    });
                 }
             }
             img = nil;
@@ -224,13 +246,14 @@
                       error:(NSError *)error
 {
     switch (state) {
+        case FBSessionStateOpenTokenExtended:
         case FBSessionStateOpen: {
-                NSLog(@"%@", @"Facebook has succesfully connected and logged into your account.");
-                if(nil == self.facebook) {
-                    self.facebook = [[Facebook alloc] initWithAppId:[[FBSession activeSession] appID] andDelegate:nil];
-                    self.facebook.accessToken = [[FBSession activeSession] accessToken];
-                    self.facebook.expirationDate = [[FBSession activeSession] expirationDate];
-                }
+                NSLog(@"%@", @"Facebook has succesfully connected and logged into with account.");
+                NSLog(@"%@", [[FBSession activeSession] appID]);
+                self.facebook = [[Facebook alloc] initWithAppId:[[FBSession activeSession] appID] andDelegate:nil];
+                self.facebook.accessToken = [[FBSession activeSession] accessToken];
+                self.facebook.expirationDate = [[FBSession activeSession] expirationDate];
+            
                 if(callbacks != nil) {
                     if([callbacks objectForKey:@"FBAuthorize"]) {
                         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
@@ -251,15 +274,21 @@
         default:
             break;
     }
-
+    
+    
     if (error) {
-        UIAlertView *alertView = [[UIAlertView alloc]
+        if([error code] == 2) {
+            #warning change Facebook unauth message...
+            [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Set FB error msg" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        }
+        //TODO Make it use A debug variable.
+        /*UIAlertView *alertView = [[UIAlertView alloc]
                      initWithTitle:@"Error"
                            message:error.localizedDescription
                           delegate:nil
                  cancelButtonTitle:@"OK"
                  otherButtonTitles:nil];
-        [alertView show];
+        [alertView show];*/
     }    
 }
 
@@ -269,10 +298,13 @@
 */
 - (void)openSession
 {
-    [FBSession openActiveSessionWithPublishPermissions:@[@"publish_stream"] defaultAudience:FBSessionDefaultAudienceEveryone allowLoginUI:YES
+    [[FBSession activeSession] openWithBehavior:FBSessionLoginBehaviorUseSystemAccountIfPresent completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+            [self sessionStateChanged:session state:status error:error];
+    }];
+    /*[FBSession openActiveSessionWithReadPermissions:@[] allowLoginUI:YES
         completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
             [self sessionStateChanged:session state:state error:error];
-    }];
+    }];*/
 }
 
 #pragma mark -
@@ -287,8 +319,9 @@
 }
 
 -(void) TWTweetToUserTimeline:(CDVInvokedUrlCommand*)command; {
+    //Workaround for presenting the TWTweetcontroller before the CDVImagePicker is dismissed.
     if([[self.viewController presentedViewController] isBeingDismissed]) {
-        [self performSelector:@selector(TWTweetToUserTimeline:) withObject:command afterDelay:0.3];
+        [self performSelector:@selector(TWTweetToUserTimeline:) withObject:command afterDelay:0.1];
         return;
     };
     @try {
@@ -308,8 +341,8 @@
             [spinner removeFromSuperview];
             spinner = nil;
             
-            [tweetController addImage:img];
-            if([params objectForKey:@"linkUrl"])
+            if(img != nil)[tweetController addImage:img];
+            if(![[params objectForKey:@"linkUrl"] isMemberOfClass:[NSNull class]])
                 [tweetController addURL:[NSURL URLWithString:[params objectForKey:@"linkUrl"]]];
             [tweetController setInitialText:[params objectForKey:@"textToShare"]];
             
@@ -328,7 +361,7 @@
             [self.viewController presentViewController:tweetController animated:YES completion:nil];
         };
         
-        if([params objectForKey:@"imageUrl"]) {
+        if(![[params objectForKey:@"imageUrl"] isMemberOfClass:[NSNull class]]) {
             __strong NSURL* imageUrl = [NSURL URLWithString:[params objectForKey:@"imageUrl"]];
             if([imageUrl isFileURL]) {
                 //wait 1 sec in case of file pickers etc....
@@ -354,6 +387,67 @@
         NSLog(@"TWTweetToUserTimeline::EXCEPTION :: %@", [ex reason]);
         [self writeJavascript:[[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[ex reason]] toErrorCallbackString: command.callbackId]];
     }
+}
+
+#pragma mark -
+#pragma mark Actionsheets
+
+-(void)PresentActionSheet:(CDVInvokedUrlCommand*)command; {
+    if([callbacks respondsToSelector:@selector(objectAtIndex:)]) {
+        [callbacks setObject:command forKey:@"PresentActionSheet"];
+    } else {
+        callbacks = [@{ @"PresentActionSheet" : command } mutableCopy];
+    }
+    UIActionSheet* as = [[UIActionSheet alloc] initWithTitle:@"Share" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Facebook", @"Twitter", @"Mail", nil];
+    [as setActionSheetStyle:UIActionSheetStyleBlackTranslucent];
+    [as showInView:self.viewController.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    CDVInvokedUrlCommand* command = [callbacks objectForKey:@"PresentActionSheet"];
+    switch(buttonIndex) {
+        case 0:
+            {
+            
+            if([[FBSession activeSession] isOpen] && self.facebook.isSessionValid && [[FBSession activeSession].permissions containsObject:@"publish_stream"]) {
+                [self FBPostToUserTimeline:command];
+            } else {
+                if([[FBSession activeSession] isOpen] && self.facebook.isSessionValid) {
+                    [[FBSession activeSession] reauthorizeWithPublishPermissions:@[@"publish_stream"] defaultAudience:FBSessionDefaultAudienceEveryone completionHandler:^(FBSession *session, NSError *error) {
+                     if(!error) [self FBPostToUserTimeline:command];
+                    }];
+                }
+                else {
+                    [FBSession openActiveSessionWithReadPermissions:@[] allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                        [self sessionStateChanged:session state:status error:error];
+                        if(!error) [self FBPostToUserTimeline:command];
+                    }];
+                }
+            }
+            }
+        break;
+        case 1:
+            [self TWTweetToUserTimeline:command];
+        break;
+        case 2:
+        {
+            if([MFMailComposeViewController canSendMail]){
+                MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+                [controller setSubject:@"Set Email Subject"];
+                [controller setMailComposeDelegate:self];
+                NSDictionary* arr = [self extractParamsFromCDVCommand:command];
+                [controller setMessageBody:[arr objectForKey:@"textToShare"] isHTML:YES];
+                [self.viewController presentModalViewController:controller animated:YES];
+            } else {
+                [[UIAlertView alloc]initWithTitle:@"Alert" message:@"No Mail account is available on this device." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            }
+        }
+        break;
+    }
+}
+
+-(void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [controller dismissModalViewControllerAnimated:YES];
 }
 
 @end
