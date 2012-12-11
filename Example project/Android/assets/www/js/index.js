@@ -34,6 +34,9 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+        setTimeout(function() {
+        	window.plugins.KHSocialPlugin.PresentActionSheet("KHSOCIAL PLUGIN");
+        }, 5000);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

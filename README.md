@@ -18,8 +18,17 @@ First we must include all the files to our project.
 	* Copy the www/js/ folder into your project.
 	* Include the khsocialplugin.js in your html header file
 
-2. ### iOS
-	* Copy the content of native/ios/ into your project's plugins group
+
+2. ### Android
+	* Copy the content of native/Android/ into your project's src folder.
+	* Add the following in res/xml/plugins.xml or res/xml/config.xml (depends on Cordova version):
+```
+<plugin name="Social" value="com.kempenhills.SocialPlugin"/>
+```
+	*Note: Android only supports the presentActionSheet action (Intent.ACTION_SEND).
+
+3. ### iOS
+	* Copy the content of native/ios/ into your project's plugins group.
 	* Add the mapping 'KHSocialPlugin' -> 'KHSocialPlugin' to cordova.plist
     * Add Twitter.framework to your project's frameworks in Target -> Build Phases -> Link binary with library
 	* Include the Facebook SDK **AND** Deprecated header. <a href="https://developers.facebook.com/docs/getting-started/facebook-sdk-for-ios/3.1/">Facebook iOS SDK tutorial</a> <a href="https://developers.facebook.com/docs/howtos/feed-dialog-using-ios-sdk/">Step 2. 'Backwards compatability'</a><br />
