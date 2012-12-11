@@ -25,7 +25,8 @@ First we must include all the files to our project.
 ```
 <plugin name="Social" value="com.kempenhills.SocialPlugin"/>
 ```
-	*Note: Android only supports the presentActionSheet action (Intent.ACTION_SEND).
+
+*Note: Android only supports the presentActionSheet action (Intent.ACTION_SEND).
 
 3. ### iOS
 	* Copy the content of native/ios/ into your project's plugins group.
