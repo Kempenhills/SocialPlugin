@@ -35,8 +35,15 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
         setTimeout(function() {
-        	window.plugins.KHSocialPlugin.PresentActionSheet("KHSOCIAL PLUGIN");
-        }, 5000);
+        	navigator.camera.getPicture(function(imgURI){
+                window.plugins.KHSocialPlugin.PresentActionSheet('Check out the brand new KempenHills ICT B.V. Social Plugin! Using local images!', imgURI,'https://github.com/Kempenhills/SocialPlugin');
+            }, function(e){}, {
+                quality:            40,
+                destinationType:    Camera.DestinationType.FILE_URI,
+                sourceType :        Camera.PictureSourceType.PHOTOLIBRARY,
+                correctOrientation: true
+            });
+        }, 2500); 
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
